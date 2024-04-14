@@ -7,10 +7,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MemberController {
@@ -19,8 +16,8 @@ public class MemberController {
     private final AtomicLong index = new AtomicLong(1);
 
     @PostMapping("/members")
-    public ResponseEntity<Void> create() {
-        // TODO: member 정보를 받아서 생성한다.
+    public ResponseEntity<Void> create(@RequestBody Member member) {
+        // TODO: member 정보를 받아서 생성한다. -> 어노테이션 @RequestBody 사용
         Member newMember = Member.toEntity(null, index.getAndIncrement());
         members.add(newMember);
         return ResponseEntity.created(URI.create("/members/" + newMember.getId())).build();
